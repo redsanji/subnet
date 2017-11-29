@@ -1,6 +1,18 @@
-import { convertToSubnet, ipaddress, Short, BinaryID, IntegerID, HexID } from './helper';
+import { convertToSubnet, 
+        ipaddress,
+        Short,
+        BinaryID, 
+        IntegerID, 
+        HexID, 
+        CIDR, 
+        IPtype, 
+        IPClass,
+        convertToWildcard,
+        BinarySubnet,
+        IP,
+        
+         } from './helper';
 import { expect } from 'chai';
-
 
 describe('convertToSubnet test', () => {
     it('should convert mask to subnet', () => {
@@ -21,5 +33,11 @@ describe('convert ipdecimal to ipbinary', () => {
     })
 })
 
-console.log(Short('192.168.0.1', '16'));
-console.log(HexID('192.168.0.1'));
+// console.log(Short('192.168.0.1', '16'));
+// console.log(HexID('192.168.0.1'));
+// console.log(CIDR(24));
+// console.log(IPtype('192.168.1.1'));
+// console.log(IPClass('8'));
+// console.log(convertToSubnet(1));
+// console.log(convertToWildcard(1));
+console.log(BinarySubnet(25));
