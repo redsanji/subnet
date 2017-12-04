@@ -63,4 +63,4 @@ NetworkAddress('192.168.1.1' , 16)
 // console.log(IPClass('8'));
 // console.log(convertToSubnet(1));
 // console.log(convertToWildcard(1));
-console.log(BinarySubnet(25));
+//console.log(BinarySubnet(25));

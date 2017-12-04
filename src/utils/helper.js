@@ -1,7 +1,15 @@
 
-export const IP = (ip) => {
+export const IPandMask = (ip) => {
     return ip;
 }
+
+export const ipaddress = (ip) => {
+    const iparray = ip.split('.').map((point) => {
+        const ipp = (+point).toString(2);
+        return '0'.repeat(8-ipp.length) + ipp;
+    });
+    return iparray.join('.');
+} // 255.255.0.128 -> 11111111.11111111.00000000.10000000
 
 export const NetworkAddress = (ip, mask) => {
     ip = ipaddress(ip).split('.').join('');
@@ -24,14 +32,17 @@ export const Broadcast = (ip, mask) => {
 }
 
 export const convertToSubnet = (mask) => {
-    const subnet = [0, 0, 0, 0].map(() => {
-        const sub = '00000000'.split('').map(() => {
-            mask -=1;
-            return mask >=0 ? '1' : '0';
-        })
-        return parseInt(sub.join(''), 2);
-    });
-    return subnet.join('.');
+    if (mask>=0 && mask<=32) {
+        const subnet = [0, 0, 0, 0].map(() => {
+            const sub = '00000000'.split('').map(() => {
+                mask -=1;
+                return mask >=0 ? '1' : '0';
+            })
+            return parseInt(sub.join(''), 2);
+        });
+        return subnet.join('.');
+    }
+    return "Error! Subnet can't be calculate"
 } // 1 -> 128.0.0.0
 
 
@@ -67,14 +78,6 @@ export const BinarySubnet = (mask) => {
     const b = ipaddress(a);
     return b;
 }
-
-export const ipaddress = (ip) => {
-    const iparray = ip.split('.').map((point) => {
-        const ipp = (+point).toString(2);
-        return '0'.repeat(8-ipp.length) + ipp;
-    });
-    return iparray.join('.');
-} // 255.255.0.128 -> 11111111.11111111.00000000.10000000
 
 
 export const IPClass = (mask) => {
@@ -120,3 +123,20 @@ export const IntegerID = (ip) => {
 export const HexID = (ip) => {
     return (IntegerID(ip)).toString(16);
 }
+
+export const tenToBinary = (ip) => {
+    let max = Broadcast(ip, mask).split('.');
+    max[3] = (parseInt(max[3],10)-1).toString();
+    return min.join('.')+' - '+max.join('.');
+    }
+    
+    export const checkIp = (ip) => {
+        let i
+        let ipNew = ip.split('.')
+        for (i=0; i<4; i++) {
+            if (isNaN(parseInt(ipNew[i])) || (parseInt(ipNew[i])>255 && parseInt(ipNew[i])<0)) {
+                return false
+            }
+        }
+        return true
+     } 
