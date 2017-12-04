@@ -22,7 +22,7 @@ export const NetworkAddress = (ip, mask) => {
 }
 
 export const Broadcast = (ip, mask) => {
-    let netaddr = ipaddress(getNetworkAddress(ip, mask)).split('.').join('');
+    let netaddr = ipaddress(NetworkAddress(ip, mask)).split('.').join('');
     let bc = netaddr.substr(0, mask)+'1'.repeat(32-mask);
     bc = bc.match(/.{8}/g);
     const output = bc.map((elem) => {
@@ -124,19 +124,54 @@ export const HexID = (ip) => {
     return (IntegerID(ip)).toString(16);
 }
 
-export const tenToBinary = (ip) => {
-    let max = Broadcast(ip, mask).split('.');
-    max[3] = (parseInt(max[3],10)-1).toString();
-    return min.join('.')+' - '+max.join('.');
-    }
+// export const tenToBinary = (ip) => {
+//     let max = Broadcast(ip, mask).split('.');
+//     max[3] = (parseInt(max[3],10)-1).toString();
+//     return min.join('.')+' - '+max.join('.');
+// }
     
-    export const checkIp = (ip) => {
-        let i
-        let ipNew = ip.split('.')
-        for (i=0; i<4; i++) {
-            if (isNaN(parseInt(ipNew[i])) || (parseInt(ipNew[i])>255 && parseInt(ipNew[i])<0)) {
-                return false
-            }
+export const checkIp = (ip) => {
+    let i
+    let ipNew = ip.split('.')
+    for (i=0; i<4; i++) {
+        if (isNaN(parseInt(ipNew[i])) || (parseInt(ipNew[i])>255 && parseInt(ipNew[i])<0)) {
+            return false
         }
-        return true
-     } 
+    }
+    return true
+} 
+
+export const Anyclass = (anyclass) => {
+    if (anyclass === 'Any')
+    {
+        var ipmask=[];
+        for (var i =0; i < 32; i++){
+            ipmask[i] = convertToSubnet(i+1)
+        }
+        return ipmask;
+    }
+    else if (anyclass === 'A')
+    {
+        var ipmask=[];
+        for (var i =0; i < 24; i++){
+            ipmask[i] = convertToSubnet(i+8)
+        }
+        return ipmask;
+    }
+    else if (anyclass === 'B')
+    {
+        var ipmask=[];
+        for (var i =0; i < 16; i++){
+            ipmask[i] = convertToSubnet(i+16)
+        }
+        return ipmask;
+    }
+    else if (anyclass === 'C')
+    {
+        var ipmask=[];
+        for (var i =0; i < 8; i++){
+            ipmask[i] = convertToSubnet(i+24)
+        }
+        return ipmask;
+    }
+}
