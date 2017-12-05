@@ -2,15 +2,30 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Anyclass,
-        IPandMask,
-        convertToSubnet
+        convertToSubnet,
+        ipaddress,
+        NetworkAddress,
+        Broadcast,
+        totalHost,
+        numHost,
+        range,
+        convertToWildcard,
+        BinarySubnet,
+        IPClass,
+        IPtype,
+        CIDR,
+        Short,
+        BinaryID,
+        IntegerID,
+        HexID
  } from './utils/helper';
 
 class App extends Component {
   state = {
     test: "a",
     allSubnet: Anyclass('Any'),
-    check: false
+    check: false,
+    iPbinary: Anyclass('Any')[0],
   }
 
   radioChange = e => {
@@ -23,7 +38,7 @@ class App extends Component {
   IPChange = e => {
     console.log(e.target.value)
     this.setState({
-      IPbinary: e.target.value
+      iPbinary: e.target.value
     })
   }
 
@@ -35,9 +50,30 @@ class App extends Component {
   }
 
   handlerClick = e => {
-    console.log("HELLO")
+
+    let ipnow = this.state.iPbinary.split('/')[0]
+    let mask = this.state.iPbinary.split('/')[1]
+    let ippim = this.state.valueIP
+
     this.setState({
-      check: true
+
+      check: true,
+      convertToSubnet: convertToSubnet(mask),
+      ipaddress: ipaddress(ippim),
+      NetworkAddress: NetworkAddress(ippim,mask),
+      Broadcast: Broadcast(ippim,mask),
+      totalHost: numHost(ippim,mask),
+      numHost: totalHost(ippim,mask),
+      range: range(ippim,mask),
+      convertToWildcard: convertToWildcard(mask),
+      BinarySubnet: BinarySubnet(mask),
+      IPClass: IPClass(mask),
+      IPtype: IPtype(ippim),
+      CIDR: CIDR(mask),
+      Short: Short(ippim,mask),
+      BinaryID: BinaryID(this.state.valueIP),
+      IntegerID: IntegerID(this.state.valueIP),
+      HexID: HexID(this.state.valueIP),
     })
   }
 
@@ -49,7 +85,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">IP Subnet Calculate</h1>
         </header>
-        <div class="input-group">
+        <div class="input-group" style={{display:'flex', 'justify-content':'center'}}>
           <lable>
             Network Class
           </lable>
@@ -82,7 +118,7 @@ class App extends Component {
           </select>
         </div>
           IP Address
-          <div class="input-group">
+          <div class="input-group" style={{display:'flex', 'justify-content':'center'}}>
           <input type="text" placeholder="IP Address" value={this.state.valueIP} onChange={this.Input}/>
         </div>
         <div>
@@ -101,67 +137,67 @@ class App extends Component {
           <tbody>
             <tr>
               <td>IP Address</td>
-              <td></td>
+              <td>{this.state.valueIP}</td>
             </tr>
             <tr>
               <td>Network Address</td>
-              <td></td>
+              <td>{this.state.NetworkAddress}</td>
             </tr>
             <tr>
               <td>Usable Host IP Range</td>
-              <td></td>
+              <td>{this.state.range}</td>
             </tr>
             <tr>
             <td>Broadcast Address</td>
-            <td></td>
+            <td>{this.state.Broadcast}</td>
             </tr>
             <tr>
             <td>Total Number of Hosts</td>
-            <td></td>
+            <td>{this.state.numHost}</td>
             </tr>
             <tr>
             <td>Number of Usable Hosts</td>
-            <td></td>
+            <td>{this.state.totalHost}</td>
             </tr>
             <tr>
             <td>Subnet Mask</td>
-            <td></td>
+            <td>{this.state.convertToSubnet}</td>
             </tr>
             <tr>
             <td>Wildcard Mask</td>
-            <td></td>
+            <td>{this.state.convertToWildcard}</td>
             </tr>
             <tr>
             <td>Binary Subnet Mask</td>
-            <td></td>
+            <td>{this.state.BinarySubnet}</td>
             </tr>
             <tr>
             <td>CIDR Notation</td>
-            <td></td>
+            <td>{this.state.CIDR}</td>
             </tr>
             <tr>
             <td>IP Class</td>
-            <td></td>
+            <td>{this.state.IPClass}</td>
             </tr>
             <tr>
             <td>IP Type</td>
-            <td></td>
+            <td>{this.state.IPtype}</td>
             </tr>
             <tr>
             <td>Short</td>
-            <td></td>
+            <td>{this.state.Short}</td>
             </tr>
             <tr>
             <td>Binary ID	</td>
-            <td></td>
+            <td>{this.state.BinaryID}</td>
             </tr>
             <tr>
             <td>Integer ID	</td>
-            <td></td>
+            <td>{this.state.IntegerID}</td>
             </tr>
             <tr>
             <td>Hex ID	</td>
-            <td></td>
+            <td>{this.state.HexID}</td>
             </tr>
           </tbody>
         </table>

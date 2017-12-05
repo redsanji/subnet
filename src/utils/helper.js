@@ -1,8 +1,4 @@
 
-export const IPandMask = (ip) => {
-    return ip;
-}
-
 export const ipaddress = (ip) => {
     const iparray = ip.split('.').map((point) => {
         const ipp = (+point).toString(2);
@@ -55,7 +51,12 @@ export const totalHost = (ip, mask) => {
 }
 
 export const numHost = (ip, mask) => {
-    return totalHost(ip, mask)-2;
+    var a = totalHost(ip, mask)-2;
+    if (a <= 0)
+    {
+        a=0;
+    }
+    return a;
 }
 
 export const range = (ip, mask) => {
@@ -144,34 +145,38 @@ export const checkIp = (ip) => {
 export const Anyclass = (anyclass) => {
     if (anyclass === 'Any')
     {
-        var ipmask=[];
+        let ipmask=[];
         for (var i =0; i < 32; i++){
-            ipmask[i] = convertToSubnet(i+1)
+            ipmask[i] = convertToSubnet(i+1) + ' / ' + (i+1);
         }
+        ipmask.reverse();
         return ipmask;
     }
     else if (anyclass === 'A')
     {
         var ipmask=[];
-        for (var i =0; i < 24; i++){
-            ipmask[i] = convertToSubnet(i+8)
+        for (var i =0; i < 25; i++){
+            ipmask[i] = convertToSubnet(i+8) + ' / ' + (i+8);
         }
+        ipmask.reverse();
         return ipmask;
     }
     else if (anyclass === 'B')
     {
         var ipmask=[];
-        for (var i =0; i < 16; i++){
-            ipmask[i] = convertToSubnet(i+16)
+        for (var i =0; i < 17; i++){
+            ipmask[i] = convertToSubnet(i+16) + ' / ' + (i+ 16);
         }
+        ipmask.reverse();
         return ipmask;
     }
     else if (anyclass === 'C')
     {
         var ipmask=[];
-        for (var i =0; i < 8; i++){
-            ipmask[i] = convertToSubnet(i+24)
+        for (var i =0; i < 9; i++){
+            ipmask[i] = convertToSubnet(i+24) + ' / ' + (i+24);
         }
+        ipmask.reverse();
         return ipmask;
     }
 }
