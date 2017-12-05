@@ -26,6 +26,7 @@ class App extends Component {
     allSubnet: Anyclass('Any'),
     check: false,
     iPbinary: Anyclass('Any')[0],
+    valueIP: '128.0.0.0'
   }
 
   radioChange = e => {
